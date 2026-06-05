@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            /*overflow: hidden;*/
+        }
+        canvas{
+           position: fixed;
+           inset: 0;
+           width: 100vw;
+           height: 100vh;
+           display: block;
+           background-color: rgb(0, 167, 56);
+        }
+        #space1{
+            left: 0;
+            top: 85%;
+            position: absolute;
+            height: 15%;
+            width: 100%;
+            display: flex;
+        }
+        .btn{
+            
+            user-select: none;
+            height: 100%;
+            width: 50%;
+            background-color: rgb(254, 255, 203);
+            border: 0;
+            border-right: 2px solid black;
+            border-left: 2px solid black;
+            font-size: 45px;
+        }
+        #ut{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100px;
+            width: 300px;
+        }
+        #score{
+            user-select: none;
+            position: relative;
+            left: 10px;
+            font-size: 30px;
+            font-family: "Outfit", sans-serif;
+        }
+        #vidas{
+            user-select: none;
+            position: relative;
+            left: 10px;
+            font-size: 30px;
+            font-family: "Outfit", sans-serif;
+        }
+        #space2{
+            display: none;
+            user-select: none;
+            border: 1px solid black;
+            position: absolute;
+            border-radius: 15px;
+            height: 80%;
+            width: 80%;
+            background-color: rgb(194, 74, 0);
+            left: calc(50% - 40% - 1px);
+            top: calc(50% - 40% - 1px);
+            
+        }
+        #space3{
+            display: flex;
+            height: 50%;
+            width: 100%;
+            color: red;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            background-color: rgb(0, 167, 56);
+            font-size: 50px;
+            font-family: "Outfit", sans-serif;
+            align-items: center;
+            justify-content: center;
+        }
+        #space4{
+            display: block;
+            top: 50%;
+            height: 50%;
+            width: 100%;
+        }
+        #btn3{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50%;
+            width: 100%;
+            background-color: rgb(166, 166, 166);
+            font-size: 35px;
+            font-family: "Outfit", sans-serif;
+        }
+        #btn4{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50%;
+            width: 100%;
+            background-color: rgb(0, 213, 7);
+            font-size: 35px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            font-family: "Outfit", sans-serif;
+        }
+        #space5{
+            font-family: "Outfit", sans-serif;
+            border: 2px solid rgb(255, 102, 14);
+            border-radius: 15px;
+            height: 90%;
+            width: 90%;
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            background-color: transparent;
+        }
+        #space6{
+            font-family: "Outfit", sans-serif;
+            display: flex;
+            justify-content: center;
+            height: 50%;
+            width: 100%;
+            background-color: transparent;
+            font-size: 50px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        #space7{
+            font-family: "Outfit", sans-serif;
+            top: 50%;
+            height: 50%;
+            width: 100%;
+            font-size: 50px;
+        }
+        #btn5{
+            user-select: none;
+            font-family: "Outfit", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50%;
+            width: 100%;
+            background-color: rgb(166, 166, 166);
+            font-size: 35px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        #btn6{
+            user-select: none;
+            font-family: "Outfit", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50%;
+            width: 100%;
+            background-color: rgb(0, 213, 7);
+            font-size: 35px;
+        }
+        
+        #playerD{
+            position: fixed;
+            top: 30%;
+            left: calc(50% - 25px);
+            height: 50px;
+            width: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+        #sombraD{
+            position: fixed;
+            top: 30%;
+            left: calc(50% - 25px - 10px);
+            height: 50px;
+            width: 50px;
+            background-color: rgb(0, 0, 0);
+        }
+        #btn1{
+            display: none;
+        }
+        #btn2{
+            display: none;
+        }
+        /*/**/
+        #tutorial_s{
+            height: 170%;
+            width: 90%;
+            position: absolute;
+            background-color: rgb(197, 197, 197);
+            border: 2px solid black;
+            left: 5%;
+            top: 5%;
+            display: none;
+        }
+        .space_tutorial{
+            position: relative;
+            width: 100%;
+            height: 30%;
+        }
+        #space_ini1{
+            background-color: rgb(238, 238, 238);
+        }
+        #exemplo_ini1{
+            background-color: rgb(0, 120, 0);
+            position: relative;
+            height: 5%;
+            width: 20%;
+            left: 75%;
+            top: 30%;
+            animation: exemplo_ini2_a 1000ms linear infinite;
+        }
+        @keyframes exemplo_ini1_a{
+            0%{
+               opacity: 0.5;
+            }
+            15%{
+                top: 30%;
+                opacity: 1;
+            }
+            85%{
+                top: 60%;
+                opacity: 1;
+            }
+            95%{
+                opacity: 0.5;
+            }
+        }
+         #exemplo_ini2{
+            background-color: rgb(0, 0, 0);
+            position: relative;
+            height: 5%;
+            width: 36%;
+            left: 59%;
+            top: 30%;
+            animation: exemplo_ini2_a 1000ms linear infinite;
+        }
+        @keyframes exemplo_ini2_a{
+            0%{
+               opacity: 0.5;
+            }
+            15%{
+                top: 30%;
+                opacity: 1;
+            }
+            85%{
+                top: 60%;
+                opacity: 1;
+            }
+            95%{
+                opacity: 0.5;
+            }
+        }
+        #space_power{
+            background-color: rgb(238, 238, 238);
+        }
+        #pwr{
+            position: relative;
+            height: 40px;
+            width: 70%;
+            left: 15%;
+            top: 50%;
+            display: grid;
+            grid-template-columns: calc(50% - 20px) calc(50% - 20px) 1px;   
+                   
+        }
+        #pwr1{
+            border: 1px solid black;
+            background-color: rgb(0, 255, 255);
+            box-shadow: 0 0 30px rgb(0, 255, 255);
+            height: 40px;
+            width: 40px;
+        }
+        #pwr2{
+            border: 1px solid black;
+            background-color: rgb(250, 230, 0);
+            box-shadow: 0 0 30px rgb(250, 230, 0);
+            height: 40px;
+            width: 40px;
+        }
+        #pwr3{
+            border: 1px solid black;
+            background-color: rgb(200, 220, 255);
+            box-shadow: 0 0 30px rgb(200, 220, 255);
+            height: 40px;
+            width: 40px;
+        }
+        .titulos{
+            font-family: "Domine", serif;
+            font-size: 22px;
+            position: relative;
+            left: 2%;
+            top: 2%;
+        }
+        .texto{
+            font-family: "Outfit", sans-serif;
+            font-size: 20px;
+            position: relative;
+            width: 90%;
+            left: 5%;
+            top: 10%;
+            align-items: center;
+        }
+        #voltar{
+            border: 0;
+            position: relative;
+            top: 0;
+            left: 0;
+            font-size: 30px;
+            background-color: rgb(194, 255, 194);
+            height: 10%;
+            width: 100%;
+        }
+        img{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <div id="ut">
+        <div id="score">Score: 0</div>
+        <div id="vidas">Vidas: ❤️❤️❤️</div>
+
+    </div>
+    <div id="space1">
+        <button id="btn1" class="btn">⬅️</button>
+        <button id="btn2" class="btn">➡️</button>
+    </div>
+    <div id="space2">
+        <div id="space3">GAME OVER</div>
+        <div id="space4">
+            <div id="btn3">Voltar</div>
+            <div id="btn4">Jogar novamente</div>
+        </div>
+    </div>
+
+    <div id="space5">
+        <div id="space6">Pixel Runner
+            <div id="sombraD"></div>
+            <div id="playerD"></div>
+        </div>
+        <div id="space7">
+            <div id="btn6">Jogar</div>
+            <div id="btn5">Tutorial</div>
+        </div>
+    </div>
+    <div id="tutorial_s">
+        <div class="space_tutorial" id="space_ini1">
+            <div id="titulo1" class="titulos">Barreira Verde:</div>
+            <div id="texto1" class="texto">Obstáculo principal do jogo. A única forma de desviar é saindo de seu caminho! A barreira se move de forma vertical linear, nada pode para-lá</div>
+            <div id="exemplo_ini1"></div>
+        </div>
+         <div class="space_tutorial" id="space_ini2">
+            <div id="titulo2" class="titulos">Barreira Preta:</div>
+            <div id="texto2" class="texto">Obstáculo que ocupa toda a tela. Não há para onde correr, basta clicar nele para faze-lo desaparecer! A barreira se move de forma vertical linear, em baixa velocidade</div>
+            <div id="exemplo_ini2"></div>
+        </div>
+        <div class="space_tutorial" id="space_power">
+            <div id="titulo2" class="titulos">Power Ups:</div>
+            <div id="texto2" class="texto">Power ups são poderes. Cada um vai te ajudar de formas diferentes. Como aumentar a velocidade e score</div>
+            <div id="pwr">
+            <div id="pwr1"></div>
+            <div id="pwr2"></div>
+            <div id="pwr3"></div>
+            </div>
+        </div>
+        <button id="voltar" class="titulos">Voltar
+
+        </button>
+    </div>
+    <img src="teste_img.jpg" alt="">
+    <script>
+        //Variaveis começo
+        
+        var canvas = {obj: document.querySelector("canvas"), x: 0, y: 0, colorR: 0}
+        canvas.obj.height = window.innerHeight
+        canvas.obj.width = window.innerWidth
+        var inicio = false
+        var tutorial_s = document.getElementById("tutorial_s")
+        var space1 = document.getElementById("space1")
+        var space2 = document.getElementById("space2")
+        var space5 = document.getElementById("space5")
+        var ut = document.getElementById("ut")
+        var btn = document.querySelector(".btn")
+        var btn1 = {obj: document.getElementById("btn1"), animando: false}
+        var btn2 = {obj: document.getElementById("btn2"), animando: false}
+        var btn3 = document.getElementById("btn3")
+        var btn4 = document.getElementById("btn4")
+        var btn5 = document.getElementById("btn5")
+        var btn6 = document.getElementById("btn6")
+        var voltar = document.getElementById("voltar")
+        var ctx = canvas.obj.getContext("2d")
+        var score = {obj: document.getElementById("score"), value: 0}
+        var vidas = {obj: document.getElementById("vidas"), value: 3}
+        var particulasA = []
+        var particulas2A = []
+        var finalA = []
+        var playerD = document.getElementById("playerD")
+        var playerDD = playerD.getBoundingClientRect();
+        var inimigo = {
+            x: 0,
+            y: -30,
+            h: 15,
+            w: innerWidth / 2,
+            color: 'rgb(0, 120, 0)',
+            vel: 3
+        }
+        var inimigo2 = {
+            x: 0,
+            y: -70,
+            h: 70,
+            w: innerWidth,
+            color: 'rgb(0, 10, 0)',
+            vel: 1.2,
+            rodada: 0
+        }
+        //aumentar a velocidade do jogador
+        var aliado = {
+            x: 0,
+            y: -100,
+            size: 50,
+            color: 'rgb(0, 255, 255)',
+            blur: 30,
+            rodada: 0,
+            piscando: 'diminuindo'
+        } 
+        //deixa o jogador imortal por algum tempo
+        var aliado2 = {
+            x: 0,
+            y: -100,
+            size: 50,
+            color: 'rgb(250, 230, 0)',
+            blur: 30,
+            rodada: 0,
+            piscando: 'diminuindo'
+        }
+        //aumenta o score
+        var aliado3 = {
+            x: 0,
+            y: -100,
+            size: 50,
+            color: 'rgb(200, 220, 255)',
+            blur: 30,
+            rodada: 0,
+            piscando: 'diminuindo'
+        }
+        var aliadoControle = 1
+        
+        var sombra = {
+            x: 100,
+            y: window.innerHeight - 195,
+            size: 50,
+            nivel: 0,
+            direcao: null
+        }
+        
+        var player = {
+            r: 190,
+            g: 255,
+            b: 190,
+            x: 100,
+            y: window.innerHeight - 250,
+            size: 50,
+            direcao: null,
+            vel: 10,
+            vidas: 3,
+            imortal: 0,
+            velocidade: false
+        }
+        //Variaveis final
+
+        //Eventos começo
+
+        btn1.obj.addEventListener("mousedown", function(){
+            btn1.animando = true
+                player.direcao = 'left'
+        })
+        btn1.obj.addEventListener("mouseup", function(){
+            btn1.animando = false
+            player.direcao = null
+        })
+        btn1.obj.addEventListener("touchstart", function(){
+            btn1.animando = true
+            player.direcao = 'left'
+        })
+        btn1.obj.addEventListener("touchend", function(){
+            btn1.animando = false
+            player.direcao = null
+        })
+        btn1.obj.addEventListener("mouseleave", function(){
+            btn1.animando = false
+            player.direcao = null
+        })
+        btn2.obj.addEventListener("mousedown", function(){
+            btn2.animando = true
+            player.direcao = 'right'
+        })
+        btn2.obj.addEventListener("mouseup", function(){
+            btn2.animando = false
+            player.direcao = null
+        })
+        btn2.obj.addEventListener("touchstart", function(){
+            btn2.animando = true
+            player.direcao = 'right'
+        })
+        btn2.obj.addEventListener("touchend", function(){
+            btn2.animando = false
+            player.direcao = null
+        })
+        btn2.obj.addEventListener("mouseleave", function(){
+            btn2.animando = false
+            player.direcao = null
+        })
+
+        document.addEventListener("click", function(e){
+            if(e.offsetY > inimigo2.y && e.offsetY < inimigo2.y + inimigo2.h && inimigo2.y > inimigo2.h){
+                inimigo2.y = -70
+                inimigo2.rodada += 2
+            }
+        })
+        document.addEventListener("touchend", function(e){
+            if(e.offsetY > inimigo2.y && e.offsetY < inimigo2.y + inimigo2.h && inimigo2.y > inimigo2.h){
+                inimigo2.y = -70
+                inimigo2.rodada += 2
+            }
+        })
+        window.addEventListener("resize", resizeCanvas)
+            
+            btn4.addEventListener("click", function(){
+                window.location.reload()
+            })
+            btn4.addEventListener("touchend", function(){
+                window.location.reload()
+            })
+            btn6.addEventListener("click", function(){
+                ut.style.display = 'block'
+                space5.style.display = 'none'
+                inicio = true
+                btn1.obj.style.display = 'block'
+                btn2.obj.style.display = 'block'
+            })
+            btn6.addEventListener("touchend", function(){
+                ut.style.display = 'block'
+                space5.style.display = 'none'
+                inicio = true
+                btn1.obj.style.display = 'block'
+                btn2.obj.style.display = 'block'
+            })
+            btn5.addEventListener("click", function(){
+                tutorial_s.style.display = 'block'
+                
+            })
+            btn5.addEventListener("touchstart", function(){
+                tutorial_s.style.display = 'block'
+                
+            })
+            voltar.addEventListener("click", function(){
+                tutorial_s.style.display = 'none'
+            })
+            voltar.addEventListener("touchstart", function(){
+                tutorial_s.style.display = 'none'
+            })
+        //Eventos final
+        //Functions começo
+        function resizeCanvas(){
+            canvas.obj.height = window.innerHeight
+            canvas.obj.width = window.innerWidth
+            player.y = window.innerHeight - 250
+            sombra.y = window.innerHeight - 250
+            inimigo2.x = 0
+        }
+        function draw(){
+            ctx.shadowBlur = 0
+            ctx.fillStyle = 'rgb(0, 20, 0)'
+            ctx.fillRect(sombra.x, sombra.y, sombra.size, sombra.size)
+
+            ctx.shadowColor = 'rgb(190, 255, 190)'
+            ctx.shadowBlur = 5
+            ctx.fillStyle = 'rgb(' + player.r + ', ' + player.g + ', ' + player.b + ')'
+            ctx.fillRect(player.x, player.y, player.size, player.size)
+
+            ctx.shadowBlur = 0
+            ctx.fillStyle = inimigo.color
+            ctx.fillRect(inimigo.x, inimigo.y, inimigo.w, inimigo.h)
+
+            ctx.fillStyle = inimigo2.color
+            ctx.fillRect(inimigo2.x, inimigo2.y, inimigo2.w, inimigo2.h)
+
+            ctx.shadowColor = aliado.color
+            ctx.shadowBlur = aliado.blur
+            ctx.fillStyle = aliado.color
+            ctx.fillRect(aliado.x, aliado.y, aliado.size, aliado.size)
+
+            ctx.shadowColor = aliado2.color
+            ctx.shadowBlur = aliado2.blur
+            ctx.fillStyle = aliado2.color
+            ctx.fillRect(aliado2.x, aliado2.y, aliado2.size, aliado2.size)
+
+            ctx.shadowColor = aliado3.color
+            ctx.shadowBlur = aliado3.blur
+            ctx.fillStyle = aliado3.color
+            ctx.fillRect(aliado3.x, aliado3.y, aliado3.size, aliado3.size)
+
+            
+            
+        }
+
+        function draw_particulas(){
+            for(let i = 0; i < particulasA.length; i++){
+                particulasA[i].draw_quadrado()
+                particulasA[i].move_particula()
+                
+        }
+        }
+        function btns(){
+            if(btn1.animando === true){
+                btn1.obj.style.fontSize = "35px"
+                btn1.obj.style.backgroundColor = "rgb(158, 190, 148)"
+            }else{
+                btn1.obj.style.fontSize = "45px"
+                btn1.obj.style.backgroundColor = "rgb(203, 255, 203)"
+            }
+            
+            if(btn2.animando === true){
+                btn2.obj.style.fontSize = "35px"
+                btn2.obj.style.backgroundColor = "rgb(158, 190, 148)"
+            }else{
+                btn2.obj.style.fontSize = "45px"
+                btn2.obj.style.backgroundColor = "rgb(203, 255, 203)"
+            }
+        }
+        function movePlayer(){
+            if(player.direcao === null){
+                return
+            }
+            if(player.direcao === 'left' && player.x > 0){
+                player.x -= player.vel
+                sombra.direcao = 'left'
+            }
+            if(player.direcao === 'right' && player.x < innerWidth - player.size){
+                player.x += player.vel
+                 sombra.direcao = 'right'
+            }
+        }
+
+        function moveInimigo(){
+            if(inimigo.y > innerHeight){
+                inimigo.vel += 0.1
+                inimigo.y = -30
+                inimigo.w = Math.random() * innerWidth / 2 + (innerWidth / 2 - (player.size * 2.2))
+                score.value += 1
+                score.obj.innerHTML = 'Score : ' + score.value
+                aliado.rodada++
+                aliado2.rodada++
+                aliado3.rodada++
+                console.log(aliado.rodada)
+            }
+            inimigo.y += inimigo.vel
+    
+            if(inimigo.y < 0){
+                inimigo.x = Math.random() * (innerWidth - inimigo.w)
+
+            }
+        }
+        function moveInimigo2(){
+            if(score.value > inimigo2.rodada){
+                inimigo2.y += inimigo2.vel
+
+            }
+            if(inimigo2.y + inimigo2.h > 10){
+                canvas.obj.style.backgroundColor = 'rgb(' + canvas.colorR + ', ' + (167 - inimigo2.y / 10) + ', 56)'
+            }else{
+                canvas.obj.style.backgroundColor = 'rgb(' + canvas.colorR + ', 167, 56)'
+            }
+            if(inimigo2.y > player.y + 50){
+                inimigo2.y = -100
+            }
+        }
+        function testeColisao(){
+            if(player.imortal == 0){
+
+            
+            if(player.y < inimigo.y + inimigo.h && player.x + player.size > inimigo.x && player.x < inimigo.x + inimigo.w && player.y + player.size > inimigo.y){
+                for(let i = 0; i < 100; i++){
+                    particulasA.push(new Particulas())
+                    
+                }
+                player.vidas -= 1
+                player.imortal = 190
+                canvas.colorR = 255
+                cor_tela()
+                
+            } 
+            if(inimigo2.y + inimigo2.h > player.y){
+                for(let i = 0; i < 100; i++){
+                    particulasA.push(new Particulas())
+                    inimigo2.y = -700
+                }
+                player.vidas -= 1
+                player.imortal = 190
+                canvas.colorR = 255
+                cor_tela()
+                
+            }
+        }
+        }
+
+        function sombraF(){
+            if(player.direcao === 'left'){
+                sombra.x = player.x + sombra.nivel
+                sombra.y = player.y + 10 - sombra.nivel
+                if(sombra.nivel < 5){
+                    sombra.nivel += 0.7
+                }
+            }
+            if(player.direcao === 'right'){
+                sombra.x = player.x - sombra.nivel
+                sombra.y = player.y + 10 - sombra.nivel
+                if(sombra.nivel < 5){
+                    sombra.nivel += 0.7
+                }
+            }
+            if(player.direcao === null){
+                if(sombra.direcao === 'left'){
+                    sombra.x = player.x + sombra.nivel 
+
+                }
+                if(sombra.direcao === 'right'){
+                    sombra.x = player.x - sombra.nivel 
+
+                }
+
+
+                sombra.y = player.y + 10 - sombra.nivel
+                if(sombra.nivel > 0){
+                    sombra.nivel -= 0.7
+                }
+            }
+        }
+
+        class Particulas {
+            constructor(){
+                this.velX = Math.random() * 8 - 4
+                this.velY = Math.random() * 8 - 4
+                this.size = Math.random() * 10 + 3
+                this.x = player.x + player.size / 2
+                this.y = player.y + player.size / 2
+            }
+            draw_quadrado(){
+                ctx.shadowColor = 'rgb(190, 255, 190)'
+            ctx.shadowBlur = 2
+            ctx.fillStyle = 'rgb(190, 255, 190)'
+            ctx.fillRect(this.x, this.y, this.size, this.size)
+            }
+            move_particula(){
+                this.x += this.velX
+                this.y += this.velY
+                if(this.size > 0.3){
+                    this.size -= 0.3
+
+                }
+            }
+            
+        }
+        class final{
+            constructor(){
+                this.w = 0
+                this.y = 0 + (finalA.length * (innerHeight / 6))
+            }
+            draw(){
+                ctx.shadowBlur = 0
+                ctx.fillStyle = 'rgb(0, 15, 0)'
+                ctx.fillRect(0, this.y, this.w ,innerHeight / 6)
+            }
+            onload(){
+                if(this.w < innerWidth){
+                    this.w += 20
+                }
+            }
+        }
+        
+        function draw_final(){
+            for(let i = 0; i < finalA.length; i++){
+                finalA[i].draw()
+                finalA[i].onload()
+                
+        }}
+        class Particulas2{
+            constructor(){
+                this.x = playerDD.x - 20
+                this.y = playerDD.y + 18
+                this.velY = Math.random() * 2 - 1
+                this.size = 15
+            }
+            draw(){
+                ctx.shadowBlur = 0
+                ctx.fillStyle = 'rgb(0, 20, 0)'
+                ctx.fillRect(this.x, this.y, this.size, this.size)
+            }
+            upload(){
+                this.x -= 1
+                this.y -= this.velY
+                if(this.size > 0.2){
+                    this.size -= 0.2
+
+                }else{
+                    this.size = 0
+                }
+            }
+        }
+        function draw_particulas2(){
+            for(let i = 0; i < particulas2A.length; i++){
+                particulas2A[i].draw()
+                particulas2A[i].upload()
+                
+        }}
+        function vidasF(){
+            if(player.vidas === 3){
+                vidas.obj.innerHTML = 'Vidas: ❤️❤️❤️'
+            }
+            if(player.vidas === 2){
+                vidas.obj.innerHTML = 'Vidas: ❤️❤️🖤'
+            }
+            if(player.vidas === 1){
+                vidas.obj.innerHTML = 'Vidas: ❤️🖤🖤'
+            }
+            if(player.vidas === 0){
+                vidas.obj.innerHTML = 'Vidas: 🖤🖤🖤'
+                btn3.innerHTML = 'Seu score foi de ' + score.value + '!'
+                player.size = 0
+                sombra.size = 0
+                finalF(player.vidas)
+                player.vidas--
+            }
+        }
+        function finalF(a){
+            ut.style.display = 'none'
+            space1.style.display = 'none'
+            if(a === 0){
+
+                setInterval(() => {
+                    finalA.push(new final())
+                    if(finalA.length > 11){
+                        space2.style.display = 'block'
+                    }
+            }, 200);
+            }
+        }
+        function player_cor(){
+            if(player.imortal > 0.9){
+                player.b = 190 - player.imortal
+                player.imortal--
+            }
+
+        }
+        function cor_tela(){
+            canvas.colorR--
+            if(canvas.colorR > 5){
+                requestAnimationFrame(cor_tela)
+            }
+        }
+        function move_aliados(a){
+            //////////////////////
+            console.log(a.rodada)
+            if(a.rodada >= 5){
+                if(a.y < - 49){
+                    a.x = Math.random() * (window.innerWidth - a.size)
+                    a.y++
+
+                }else{
+                    a.y += 1.2
+                }
+                if(a.y + a.size > player.y && a.x < player.x + player.size && a.x + a.size > player.x && a.y < player.y + player.size){
+                    a.y = -100
+                    aliado.rodada = 0
+                    aliado2.rodada = 0
+                    aliado3.rodada = 0
+                    if(aliadoControle === 1){
+                        vel_player()
+                    }
+                    if(aliadoControle === 2){
+                        imortal_player()
+                    }
+                    if(aliadoControle === 3){
+                        score_more()
+                    }
+                    aliadoControle++
+                //vel_player()
+            }
+            if(a.y > window.innerHeight){
+                    aliado.rodada = 0
+                    aliado2.rodada = 0
+                    aliado3.rodada = 0
+                    aliadoControle++
+
+            }
+        }
+        }
+
+        function vel_player(){
+            if(player.velocidade === false){
+                player.vel = 20
+                player.velocidade = true
+
+                setTimeout(() => {
+                    player.vel = 10
+                    player.velocidade = false
+                }, 10000);
+            }
+                
+
+            
+        }
+        function piscando(a){
+            if(a.piscando == 'diminuindo'){
+
+                a.blur--
+                if(a.blur < 2){
+
+                    a.piscando = 'aumentando'
+                }
+            }
+            if(a.piscando == 'aumentando'){
+                a.blur = a.blur + 0.5
+                if(a.blur > 50){
+
+                    a.piscando = 'diminuindo'
+                }
+            }
+        }
+        function aliados(){
+            if(aliadoControle === 1){
+            move_aliados(aliado)
+            piscando(aliado)
+            }
+            if(aliadoControle === 2){
+            move_aliados(aliado2)
+            piscando(aliado2)
+            }
+            if(aliadoControle === 3){
+            move_aliados(aliado3)
+            piscando(aliado3)
+            }
+            if(aliadoControle === 4){
+                aliadoControle = 1
+            }
+        }
+        function imortal_player(){
+            player.imortal = 600
+        }
+        function score_more(){
+            score.value += 5
+        }
+        //Functions final
+
+        //loop
+        setInterval(() => {
+            particulas2A.push(new Particulas2())
+        }, 100);
+        function loop(){
+            ctx.clearRect(0, 0, innerWidth, innerHeight)
+            
+            if(inicio === true){
+
+            btns()
+            draw()
+            movePlayer()
+            moveInimigo()
+            testeColisao()
+            sombraF()
+            draw_particulas()
+            moveInimigo2()
+            vidasF()
+            player_cor()
+            aliados()
+            draw_final()
+            
+        }else{
+            draw_particulas2()
+        }
+        requestAnimationFrame(loop)
+       }
+       window.addEventListener("load", function(){
+        loop()
+       })
+        
+
+
+        
+    </script>
+</body>
+</html>
